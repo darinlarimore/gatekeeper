@@ -52,14 +52,14 @@ function authenticate(code, cb) {
 
 // Convenience for allowing CORS on routes - GET only
 app.all('*', function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*'); 
-  res.header('Access-Control-Allow-Methods', 'GET, OPTIONS'); 
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   next();
 });
 
 
-app.get('/authenticate/:code', function(req, res) {
+app.get('/authenticate?query=:code', function(req, res) {
   console.log('authenticating code:' + req.params.code);
   authenticate(req.params.code, function(err, token) {
     var result = err || !token ? {"error": "bad_code"} : { "token": token };
